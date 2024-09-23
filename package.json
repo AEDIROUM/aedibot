@@ -1,0 +1,15 @@
+{
+  "name": "aedibot",
+  "version": "0.1.0",
+  "description": "Bot pour le serveur Discord de l’AÉDIROUM",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "author": "AÉDIROUM",
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "^14.16.2",
+    "express": "^4.21.0"
+  }
+}

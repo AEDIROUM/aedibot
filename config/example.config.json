@@ -1,0 +1,8 @@
+{
+    "name": "Calendar name",
+    "domain": "example.org",
+    "lang": "EN",
+    "port": 3042,
+    "token": "",
+    "guildId": ""
+}
