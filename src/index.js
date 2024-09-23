@@ -1,7 +1,7 @@
 const { Client, Events, GatewayIntentBits } = require("discord.js");
 const express = require("express");
 const { fetchEvents, generateICal } = require("./events");
-const config = require('../config/config.json');
+const config = require("../config/config.json");
 
 // Setup Discord link
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });

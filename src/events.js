@@ -2,10 +2,12 @@ const { GuildScheduledEventEntityType } = require("discord.js");
 
 const fetchEvents = async (guild) => {
     const events = await guild.scheduledEvents.fetch();
-    return events.filter(
-        event => event.entityType == GuildScheduledEventEntityType.External
-    ).map(
-        event => ({
+    return events
+        .filter(
+            (event) =>
+                event.entityType == GuildScheduledEventEntityType.External,
+        )
+        .map((event) => ({
             uid: event.id,
             name: event.name,
             description: event.description,
@@ -13,15 +15,17 @@ const fetchEvents = async (guild) => {
             start: event.scheduledStartAt,
             end: event.scheduledEndAt,
             created: event.createdAt,
-        })
-    );
+        }));
 };
 
-const dateToICal = date => {
-    return date.toISOString()
-        .replaceAll(":", "")
-        .replaceAll("-", "")
-        .split(".")[0] + "Z";
+const dateToICal = (date) => {
+    return (
+        date
+            .toISOString()
+            .replaceAll(":", "")
+            .replaceAll("-", "")
+            .split(".")[0] + "Z"
+    );
 };
 
 const generateICal = (name, domain, lang, events) => {
@@ -42,17 +46,19 @@ const generateICal = (name, domain, lang, events) => {
             start = end;
         }
 
-        lines.push(...[
-            "BEGIN:VEVENT",
-            `SUMMARY:${event.name}`,
-            `DESCRIPTION:${event.description}`,
-            `LOCATION:${event.location}`,
-            `DTSTART:${dateToICal(start)}`,
-            `DTEND:${dateToICal(end)}`,
-            `DTSTAMP:${dateToICal(event.created)}`,
-            `UID:${event.uid}@aediroum.ca`,
-            "END:VEVENT",
-        ]);
+        lines.push(
+            ...[
+                "BEGIN:VEVENT",
+                `SUMMARY:${event.name}`,
+                `DESCRIPTION:${event.description}`,
+                `LOCATION:${event.location}`,
+                `DTSTART:${dateToICal(start)}`,
+                `DTEND:${dateToICal(end)}`,
+                `DTSTAMP:${dateToICal(event.created)}`,
+                `UID:${event.uid}@aediroum.ca`,
+                "END:VEVENT",
+            ],
+        );
     }
 
     lines.push("END:VCALENDAR");
