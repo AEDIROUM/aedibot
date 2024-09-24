@@ -43,7 +43,7 @@ const generateICal = (name, domain, lang, events) => {
         let end = event.end;
 
         if (end < start) {
-            start = end;
+            end = start;
         }
 
         lines.push(
