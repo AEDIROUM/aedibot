@@ -28,6 +28,8 @@ const dateToICal = (date) => {
     );
 };
 
+const wrapICal = (data) => data.replace("\n", "\\r\\n");
+
 const generateICal = (name, domain, lang, events) => {
     const lines = [
         "BEGIN:VCALENDAR",
@@ -50,7 +52,7 @@ const generateICal = (name, domain, lang, events) => {
             ...[
                 "BEGIN:VEVENT",
                 `SUMMARY:${event.name}`,
-                `DESCRIPTION:${event.description}`,
+                `DESCRIPTION:${wrapICal(event.description)}`,
                 `LOCATION:${event.location}`,
                 `DTSTART:${dateToICal(start)}`,
                 `DTEND:${dateToICal(end)}`,
