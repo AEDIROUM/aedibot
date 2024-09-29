@@ -23,6 +23,6 @@ app.get("/events.ics", async (req, res) => {
     res.send(generateICal(config.name, config.domain, config.lang, events));
 });
 
-app.listen(config.port, () => {
+app.listen(config.port, "localhost", () => {
     console.log(`Now serving requests on port ${config.port}`);
 });
