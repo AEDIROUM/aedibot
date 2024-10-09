@@ -95,7 +95,18 @@ const dateToICal = (date) => {
     );
 };
 
-const wrapICal = (data) => data.replace("\n", "\\n");
+const encodeICal = (data) => data.replaceAll("\n", "\\n").replaceAll("\r", "");
+
+const wraplineICal = (line) => {
+    if (line.length > 75) {
+        return [
+            line.substring(0, 75),
+            ...wraplineICal(" " + line.substring(75)),
+        ];
+    } else {
+        return [line];
+    }
+};
 
 const generateICal = (name, domain, lang, events) => {
     const lines = [
@@ -118,9 +129,9 @@ const generateICal = (name, domain, lang, events) => {
         lines.push(
             ...[
                 "BEGIN:VEVENT",
-                `SUMMARY:${event.name}`,
-                `DESCRIPTION:${wrapICal(event.description)}`,
-                `LOCATION:${event.location}`,
+                `SUMMARY:${encodeICal(event.name)}`,
+                `DESCRIPTION:${encodeICal(event.description)}`,
+                `LOCATION:${encodeICal(event.location)}`,
                 `DTSTART:${dateToICal(start)}`,
                 `DTEND:${dateToICal(end)}`,
                 `DTSTAMP:${dateToICal(event.created)}`,
@@ -131,7 +142,7 @@ const generateICal = (name, domain, lang, events) => {
     }
 
     lines.push("END:VCALENDAR");
-    return lines.join("\n");
+    return lines.map(wraplineICal).flat().join("\r\n");
 };
 
 exports.fetchEvents = fetchEvents;
